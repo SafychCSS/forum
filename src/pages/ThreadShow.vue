@@ -9,6 +9,7 @@
                 }} replies by {{ thread.contributorsCount }} contributors</span>
         </p>
         <router-link
+            v-if="thread.userId === authUser?.id"
             :to="{name: 'ThreadEdit', id: this.id}"
             tag="button"
             class="btn-green btn-small push-top"
@@ -16,12 +17,30 @@
             Edit Thread
         </router-link>
         <PostList :posts="threadPosts" />
-        <PostEditor @save="addPost" />
+        <PostEditor
+            v-if="authUser"
+            @save="addPost"
+        />
+
+        <div
+            v-else
+            class="text-center"
+            style="margin-bottom: 50px;"
+        >
+            <router-link :to="{name: 'SignIn', query:{redirectTo: $route.path}}">
+                Sign In
+            </router-link>
+            or
+            <router-link :to="{name: 'Register',  query:{redirectTo: $route.path}}">
+                Register
+            </router-link>
+            to reply.
+        </div>
     </div>
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
 import PostList from '@/components/PostList';
 import PostEditor from '@/components/PostEditor';
 import AppDate from '@/components/AppDate';
@@ -47,6 +66,10 @@ export default {
     },
 
     computed: {
+        ...mapGetters([
+            'authUser',
+        ]),
+
         threads() {
             return this.$store.state.threads;
         },
