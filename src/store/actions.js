@@ -229,10 +229,10 @@ export default {
         const userId = auth.currentUser?.uid;
         if (!userId) return;
 
-        const userRef = doc(db, 'users', userId);
+        /*const userRef = doc(db, 'users', userId);
         const user = await getDoc(userRef);
         const item = docToResource(user);
-        commit(SET_ITEM, { resource: 'users', item });
+        commit(SET_ITEM, { resource: 'users', item });*/
 
         await dispatch('fetchItem', {
             resource: 'users',
@@ -270,6 +270,7 @@ export default {
     fetchUsers: ({ dispatch }, { ids }) => dispatch('fetchItems', { resource: 'users', ids }),
 
     async fetchItem({ state, commit }, { id, resource, handleUnsubscribe = null }) {
+        console.log('fetchItem');
         return new Promise(resolve => {
             const docRef = doc(db, resource, id);
             const unsubscribe = onSnapshot(docRef, (doc) => {

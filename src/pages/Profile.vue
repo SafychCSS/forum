@@ -1,26 +1,21 @@
 <template>
     <div class="flex-grid">
         <h1>my profile</h1>
-        <!--        <div class="col-3 push-top">
+        <div class="col-3 push-top">
+            <UserProfileCard v-if="!edit" :user="user" />
+            <UserProfileCardEditor v-else :user="user" />
+        </div>
 
-                    <UserProfileCard v-if="!edit" :user="user" />
-                    <UserProfileCardEditor v-else :user="user" />
-
-                </div>
-
-                <div class="col-7 push-top">
-
-                    <div class="profile-header">
-                          <span class="text-lead">
-                              {{ user.username }} recent activity
-                          </span>
-                        <a href="#">See only started threads?</a>
-                    </div>
-
-                    <hr>
-
-                    <PostList :posts="user.posts" />
-                </div>-->
+        <div class="col-7 push-top">
+            <div class="profile-header">
+              <span class="text-lead">
+                  {{ user.username }} recent activity
+              </span>
+                <a href="#">See only started threads?</a>
+            </div>
+            <hr>
+            <PostList :posts="user.posts" />
+        </div>
     </div>
 </template>
 
