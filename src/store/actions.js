@@ -45,6 +45,7 @@ export default {
                 dispatch('unsubscribeAuthUserSnapshot');
                 if (user) {
                     await dispatch('fetchAuthUser');
+                    resolve(user);
                 } else {
                     resolve(null);
                 }
